@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('code')->nullable();
+            $table->string('currency')->default('BRL');
             $table->string('type')->default(LedgerAccountType::BALANCE->value);
             $table->string('normal_balance')->default(EntryLineDirection::DEBIT->value);
 

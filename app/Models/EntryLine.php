@@ -24,11 +24,17 @@ class EntryLine extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<JournalEntry, $this>
+     */
     public function journalEntry(): BelongsTo
     {
         return $this->belongsTo(JournalEntry::class);
     }
 
+    /**
+     * @return BelongsTo<LedgerAccount, $this>
+     */
     public function ledgerAccount(): BelongsTo
     {
         return $this->belongsTo(LedgerAccount::class);

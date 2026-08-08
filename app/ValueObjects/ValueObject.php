@@ -33,8 +33,13 @@ abstract class ValueObject implements Castable, JsonSerializable, Stringable
         return (string) $this->toPrimitive();
     }
 
+    /**
+     * @param  array<string, mixed>  $arguments
+     * @return CastsAttributes<ValueObject|null, mixed>
+     */
     public static function castUsing(array $arguments): CastsAttributes
     {
+        /** @implements CastsAttributes<ValueObject|null, mixed> */
         return new class(static::class) implements CastsAttributes
         {
             public function __construct(protected string $voClass) {}

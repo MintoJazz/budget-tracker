@@ -26,6 +26,9 @@ class LedgerAccount extends Model
         ];
     }
 
+    /**
+     * @return HasMany<EntryLine, $this>
+     */
     public function lines(): HasMany
     {
         return $this->hasMany(EntryLine::class);

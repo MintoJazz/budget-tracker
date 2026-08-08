@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('entry_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(JournalEntry::class);
-            $table->foreignIdFor(LedgerAccount::class);
+            $table->foreignIdFor(JournalEntry::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(LedgerAccount::class)->constrained()->cascadeOnDelete();
 
             $table->integer('amount');
             $table->string('direction')->default(EntryLineDirection::DEBIT->value);

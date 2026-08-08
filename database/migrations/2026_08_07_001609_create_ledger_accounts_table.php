@@ -1,5 +1,7 @@
 <?php
 
+use App\EntryLineDirection;
+use App\LedgerAccountType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +18,8 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('code')->nullable();
-            $table->string('type');
-            $table->string('normal_balance');
+            $table->string('type')->default(LedgerAccountType::BALANCE->value);
+            $table->string('normal_balance')->default(EntryLineDirection::DEBIT->value);
 
             $table->timestamps();
         });

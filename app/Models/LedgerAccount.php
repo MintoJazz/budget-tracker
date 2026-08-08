@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\EntryLineDirection;
 use App\LedgerAccountType;
+use App\ValueObjects\AccountCode;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LedgerAccount extends Model
@@ -13,32 +14,29 @@ class LedgerAccount extends Model
         'code',
         'name',
         'type',
-        'is_synthetic',
-        'parent_id',
+        'normal_balance',
     ];
 
-    protected $casts = [
-        'is_synthetic' => 'boolean',
-        'type' => LedgerAccountType::class,
-    ];
-
-    public function parent(): BelongsTo {
-        return $this->belongsTo(LedgerAccount::class, 'parent_id');
+    protected function casts(): array
+    {
+        return [
+            'code' => AccountCode::class,
+            'type' => LedgerAccountType::class,
+            'normal_balance' => EntryLineDirection::class,
+        ];
     }
 
-    public function children(): HasMany {
-        return $this->hasMany(LedgerAccount::class, 'parent_id');
+    public function lines(): HasMany
+    {
+        return $this->hasMany(EntryLine::class);
     }
 
-    public function isTopLevel(): bool {
-        return $this->parent_id === null;
-    }
-
-    public function getFullNameAttribute(): string {
-        if ($this->isTopLevel()) {
+    public function getFullNameAttribute(): string
+    {
+        if ($this->code !== null) {
             return "{$this->code} - {$this->name}";
         }
 
-        return "{$this->parent->code}.{$this->code} - {$this->name}";
+        return $this->name;
     }
 }

@@ -14,12 +14,16 @@ class JournalEntry extends Model
         'status',
     ];
 
-    protected $casts = [
-        'date' => 'date',
-        'status' => JournalEntryStatus::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+            'status' => JournalEntryStatus::class,
+        ];
+    }
 
-    public function lines(): HasMany {
+    public function lines(): HasMany
+    {
         return $this->hasMany(EntryLine::class);
     }
 }

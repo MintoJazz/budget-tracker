@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\EntryLineDirection;
+use App\ValueObjects\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,15 +16,21 @@ class EntryLine extends Model
         'direction',
     ];
 
-    public function journalEntry(): BelongsTo {
+    protected function casts(): array
+    {
+        return [
+            'amount' => Money::class,
+            'direction' => EntryLineDirection::class,
+        ];
+    }
+
+    public function journalEntry(): BelongsTo
+    {
         return $this->belongsTo(JournalEntry::class);
     }
 
-    public function ledgerAccount(): BelongsTo {
+    public function ledgerAccount(): BelongsTo
+    {
         return $this->belongsTo(LedgerAccount::class);
-    }
-
-    public function getAmountAttribute(string $value): float {
-        return (float) $value;
     }
 }

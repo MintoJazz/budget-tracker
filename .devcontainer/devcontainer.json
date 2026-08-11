@@ -1,0 +1,15 @@
+{
+  "name": "Budget Tracker",
+  "image": "mcr.microsoft.com/devcontainers/php:8.4",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libicu-dev libzip-dev zip unzip && sudo -E docker-php-ext-configure intl && sudo -E docker-php-ext-install intl zip && composer install && npm install"
+}
